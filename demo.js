@@ -14,6 +14,9 @@ Page({
       '../../images/2018112716074070.jpg',
       '../../images/haijing.jpg'
     ],
+    timer1: null,
+    timer2: null,
+    timer3: null,
     animationData1: null,
     animationData2: null,
     animationData3: null,
@@ -22,7 +25,7 @@ Page({
     rightStart: 0, // 右移列表初始偏移值
 
     // 以下为自定义参数
-    imgWidth: 120, // 图片宽度（目前只适配宽高相等的图片）
+    imgWidth: 120, // 图片宽度
     imgGap: 10, // 图片间隙
     rotate: 45, // 列表旋转角度
     duration: 300, // 动画持续时间
@@ -49,11 +52,37 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    let [imgW, gap, len, rotate, duration] = 
-        [this.data.imgWidth, this.data.imgGap, this.data.list.length / 3, this.data.rotate, this.data.duration]
-    this.createAnimations(imgW, gap, len, 0, 'animationData1', 'left', rotate, duration)
-    this.createAnimations(imgW, gap, len, this.data.rightStart, 'animationData2', 'right', rotate, duration)
-    this.createAnimations(imgW, gap, len, this.data.leftStart, 'animationData3', 'left', rotate, duration)
+    // 默认参数
+    let defOpts = {
+      imgW: this.data.imgWidth,
+      gap: this.data.imgGap,
+      len: this.data.list.length / 3,
+      rotate: this.data.rotate,
+      duration: this.data.duration
+    }
+
+    let options1 = {
+      start: 0,
+      direction: 'left',
+      target: 'animationData1',
+      ...defOpts
+    }
+    let options2 = {
+      start: this.data.rightStart,
+      direction: 'right',
+      target: 'animationData2',
+      ...defOpts
+    }
+    let options3 = {
+      start: this.data.leftStart,
+      direction: 'left',
+      target: 'animationData3',
+      ...defOpts
+    }
+
+    this.data.timer1 = this.createAnimations(options1)
+    this.data.timer2 = this.createAnimations(options2)
+    this.data.timer3 = this.createAnimations(options3)
   },
 
   /**
@@ -63,15 +92,20 @@ Page({
    * start: 列表偏移初始值
    * target: 动画对象赋值
    * direction: 动画方向
-   * rotate: 旋转角度
-   * duration: 动画持续时间
    */
-  createAnimations(imgW, gap, len, start, target, direction, rotate, duration) {
+  createAnimations(opts) {
+
+    let [ start, direction, target, imgW, gap, len, rotate, duration ]
+      = [ opts.start, opts.direction, opts.target, 
+          opts.imgW, opts.gap, opts.len, opts.rotate, opts.duration ]
+
     let animation = wx.createAnimation({
       timingFunction: 'linear',
     })
-    let [n, moveWidth]= [start, (imgW + gap) * len]
-    setInterval(() => {
+
+    let [n, moveWidth] = [start, (imgW + gap) * len]
+
+    let timer = setInterval(() => {
       if (direction == 'left'){ // 动画向左移
         n = n - 1
         if (n < start - moveWidth) {
@@ -83,7 +117,7 @@ Page({
       }else{ // 动画向右移
         n = n + 1
         if (n > start + moveWidth) {
-          n = start
+          n = opts.start
           animation.rotate(rotate).translateX(n).step({ duration: 0 })
         } else {
           animation.rotate(rotate).translateX(n).step({ duration: duration })
@@ -93,6 +127,26 @@ Page({
         [target]: animation.export()
       })
     }, duration)
+
+    return timer // 页面隐藏或卸载时 清除定时器用
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+    clearInterval(this.data.timer1)
+    clearInterval(this.data.timer2)
+    clearInterval(this.data.timer3)
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    clearInterval(this.data.timer1)
+    clearInterval(this.data.timer2)
+    clearInterval(this.data.timer3)
   },
 
   // 图片点击事件
