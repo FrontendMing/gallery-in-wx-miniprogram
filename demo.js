@@ -119,7 +119,7 @@ Page({
       }else{ // 动画向右移
         n = n + 1
         if (n > start + moveWidth) {
-          n = opts.start
+          n = start
           animation.rotate(rotate).translateX(n).step({ duration: 0 })
         } else {
           animation.rotate(rotate).translateX(n).step({ duration: duration })
