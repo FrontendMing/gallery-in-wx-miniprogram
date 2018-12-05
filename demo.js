@@ -64,7 +64,7 @@ Page({
     }
 
     let options1 = {
-      start: 0,
+      start: this.data.leftStart,
       direction: 'left',
       target: 'animationData1',
       ...defOpts

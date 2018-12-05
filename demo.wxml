@@ -1,7 +1,7 @@
 <view class='imgs-wrap'>
-  <!-- 列表一，偏移值为0 -->
+  <!-- 列表一 -->
   <view class='imgs-list' 
-        style='transform:rotate({{rotate}}deg) translateX(0px);margin-bottom:{{listGap}}px' 
+        style='transform:rotate({{rotate}}deg) translateX({{leftStart}}px);margin-bottom:{{listGap}}px' 
         animation="{{animationData1}}">
     <block wx:for="{{list}}" wx:key="index">
       <image style="width:{{imgWidth}}px;height:{{imgWidth}}px;margin-right:{{imgGap}}px" 
