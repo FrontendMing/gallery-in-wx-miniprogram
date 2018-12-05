@@ -1,0 +1,37 @@
+<view class='imgs-wrap'>
+  <!-- 列表一，偏移值为0 -->
+  <view class='imgs-list' 
+        style='transform:rotate({{rotate}}deg) translateX(0px);margin-bottom:{{listGap}}px' 
+        animation="{{animationData1}}">
+    <block wx:for="{{list}}" wx:key="index">
+      <image style="width:{{imgWidth}}px;height:{{imgWidth}}px;margin-right:{{imgGap}}px" 
+             mode='aspectFill' 
+             src='{{item}}' 
+             bindtap="tap"></image>
+    </block>
+  </view>
+
+  <!-- 列表二 -->
+  <view class='imgs-list' 
+        style='transform:rotate({{rotate}}deg) translateX({{rightStart}}px);margin-bottom:{{listGap}}px' 
+        animation="{{animationData2}}">
+    <block wx:for="{{list}}" wx:key="index">
+      <image style="width:{{imgWidth}}px;height:{{imgWidth}}px;margin-right:{{imgGap}}px" 
+             mode='aspectFill' 
+             src='{{item}}' 
+             bindtap="tap"></image>
+    </block>
+  </view>
+
+  <!-- 列表三 -->
+  <view class='imgs-list' 
+        style='transform:rotate({{rotate}}deg) translateX({{leftStart}}px);margin-bottom:{{listGap}}px' 
+        animation="{{animationData3}}">
+    <block wx:for="{{list}}" wx:key="index">
+      <image style="width:{{imgWidth}}px;height:{{imgWidth}}px;margin-right:{{imgGap}}px" 
+             mode='aspectFill' 
+             src='{{item}}' 
+             bindtap="tap"></image>
+    </block>
+  </view>
+</view>

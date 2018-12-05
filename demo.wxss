@@ -1,0 +1,15 @@
+.imgs-wrap{
+  width: 100vw;
+  height: 100vw;
+}
+.imgs-wrap .imgs-list{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.imgs-wrap .imgs-list image{
+  flex-shrink: 0;
+  display: block;
+}

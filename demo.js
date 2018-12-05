@@ -1,0 +1,105 @@
+// pages/demo/demo.js
+import { SystemInfo } from '../../utils/systemInfo.js'
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    windowWidth: SystemInfo.sysInfo.windowWidth,
+    list: [
+      '../../images/blur_5@2x.png',
+      '../../images/main_banner.jpg',
+      '../../images/6159252dd42a2834e6d976e257b5c9ea14cebfd8.jpg',
+      '../../images/2018112716074070.jpg',
+      '../../images/haijing.jpg'
+    ],
+    animationData1: null,
+    animationData2: null,
+    animationData3: null,
+    imgWidth: 120, // 图片宽度
+    imgGap: 10, // 图片间隙
+    rotate: 45, // 列表旋转角度
+
+    listGap: 0, // 列表之间的间隙
+    leftStart: 0, // 左移列表初始偏移值
+    rightStart: 0, // 右移列表初始偏移值
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+    // 拷贝数组列表
+    this.data.list = [...this.data.list, ...this.data.list, ...this.data.list]
+    // 解构赋值
+    let [imgW, gap, len] = [this.data.imgWidth, this.data.imgGap, this.data.list.length]
+    
+    this.setData({
+      leftStart: -(imgW + gap),
+      rightStart: this.data.windowWidth - (imgW + gap) * (len / 3) * 2 - (imgW + gap),
+      listGap: (imgW + gap) / 2,
+      list: this.data.list
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    let [imgW, gap, len, rotate] = 
+        [this.data.imgWidth, this.data.imgGap, this.data.list.length / 3, this.data.rotate]
+    this.createAnimations(imgW, gap, len, 0, 'animationData1', 'left', rotate)
+    this.createAnimations(imgW, gap, len, this.data.rightStart, 'animationData2', 'right', rotate)
+    this.createAnimations(imgW, gap, len, this.data.leftStart, 'animationData3', 'left', rotate)
+  },
+
+  /**
+   * imgW: 图片宽度
+   * gap: 图片间隙
+   * len: 未拷贝前数组的长度，即原始数组长度
+   * start: 列表偏移初始值
+   * target: 动画对象赋值
+   * direction: 动画方向
+   */
+  createAnimations(imgW, gap, len, start, target, direction, rotate) {
+    let animation = wx.createAnimation({
+      timingFunction: 'linear',
+    })
+    let n = start;
+    setInterval(() => {
+      let moveWidth = (imgW + gap) * len
+      if (direction == 'left'){ // 动画向左移
+        n = n - 1
+        if (n < -moveWidth + start) {
+          n = start
+          animation.rotate(rotate).translateX(n).step({ duration: 0 })
+        } else {
+          animation.rotate(rotate).translateX(n).step({ duration: 100 })
+        }
+      }else{ // 动画向右移
+        n = n + 1
+        if (n > moveWidth + start) {
+          n = start
+          animation.rotate(rotate).translateX(n).step({ duration: 0 })
+        } else {
+          animation.rotate(rotate).translateX(n).step({ duration: 100 })
+        }
+      }
+      this.setData({
+        [target]: animation.export()
+      })
+    }, 100)
+  },
+
+  tap(){
+    debugger
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function() {
+
+  }
+})
