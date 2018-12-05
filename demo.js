@@ -1,13 +1,12 @@
 // pages/demo/demo.js
-import { SystemInfo } from '../../utils/systemInfo.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    windowWidth: SystemInfo.sysInfo.windowWidth,
-    list: [
+    windowWidth: wx.getSystemInfoSync().windowWidth,
+    list: [ // 图片列表自定义
       '../../images/blur_5@2x.png',
       '../../images/main_banner.jpg',
       '../../images/6159252dd42a2834e6d976e257b5c9ea14cebfd8.jpg',
@@ -17,13 +16,13 @@ Page({
     animationData1: null,
     animationData2: null,
     animationData3: null,
-    imgWidth: 120, // 图片宽度
-    imgGap: 10, // 图片间隙
-    rotate: 45, // 列表旋转角度
-
     listGap: 0, // 列表之间的间隙
     leftStart: 0, // 左移列表初始偏移值
     rightStart: 0, // 右移列表初始偏移值
+    // 以下为自定义参数
+    imgWidth: 120, // 图片宽度（目前只适配宽高相等的图片）
+    imgGap: 10, // 图片间隙
+    rotate: 45, // 列表旋转角度
   },
 
   /**
@@ -71,7 +70,7 @@ Page({
       let moveWidth = (imgW + gap) * len
       if (direction == 'left'){ // 动画向左移
         n = n - 1
-        if (n < -moveWidth + start) {
+        if (n < - moveWidth + start) {
           n = start
           animation.rotate(rotate).translateX(n).step({ duration: 0 })
         } else {
@@ -92,6 +91,7 @@ Page({
     }, 100)
   },
 
+  // 图片点击事件
   tap(){
     debugger
   },
