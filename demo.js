@@ -68,9 +68,8 @@ Page({
     let animation = wx.createAnimation({
       timingFunction: 'linear',
     })
-    let n = start;
+    let [n, moveWidth]= [start, (imgW + gap) * len]
     setInterval(() => {
-      let moveWidth = (imgW + gap) * len
       if (direction == 'left'){ // 动画向左移
         n = n - 1
         if (n < start - moveWidth) {
