@@ -14,7 +14,7 @@ Page({
       '../../images/2018112716074070.jpg',
       '../../images/haijing.jpg'
     ],
-    // 存储定时器返回值（NUmber），清除定时器时用
+    // 存储定时器返回值（Number），清除定时器时用
     timer1: null,
     timer2: null,
     timer3: null,
