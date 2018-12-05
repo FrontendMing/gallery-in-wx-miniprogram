@@ -63,6 +63,8 @@ Page({
    * start: 列表偏移初始值
    * target: 动画对象赋值
    * direction: 动画方向
+   * rotate: 旋转角度
+   * duration: 动画持续时间
    */
   createAnimations(imgW, gap, len, start, target, direction, rotate, duration) {
     let animation = wx.createAnimation({
