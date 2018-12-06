@@ -15,6 +15,11 @@ Page({
       '../../images/haijing.jpg'
     ],
     // 存储定时器返回值（Number），清除定时器时用
+    list: [
+      '../../images/blur_5@2x.png',
+      '../../images/main_banner.jpg',
+      '../../images/6159252dd42a2834e6d976e257b5c9ea14cebfd8.jpg',
+    ],
     timer1: null,
     timer2: null,
     timer3: null,
@@ -22,15 +27,15 @@ Page({
     animationData1: null,
     animationData2: null,
     animationData3: null,
-    listGap: 0, // 列表之间的间隙
     leftStart: 0, // 左移列表初始偏移值
     rightStart: 0, // 右移列表初始偏移值
 
     // 以下为自定义参数
     imgWidth: 120, // 图片宽度
     imgGap: 10, // 图片间隙
+    listGap: 10, // 列表之间的间隙
     rotate: 45, // 列表旋转角度
-    duration: 300, // 动画持续时间
+    duration: 100, // 动画持续时间
   },
 
   /**
@@ -40,12 +45,16 @@ Page({
     // 拷贝数组列表
     this.data.list = [...this.data.list, ...this.data.list, ...this.data.list]
     // 解构赋值
-    let [imgW, gap, len] = [this.data.imgWidth, this.data.imgGap, this.data.list.length]
+    let [imgW, gap, len, rotate] 
+      = [this.data.imgWidth, this.data.imgGap, this.data.list.length, this.data.rotate]
+    
+    // 根据列表旋转角度，计算列表之间的间隙
+    let listGap = Math.floor((imgW + this.data.listGap) / Math.cos(Math.PI * rotate / 180)) - imgW
     
     this.setData({
       leftStart: -(imgW + gap),
       rightStart: this.data.windowWidth - (imgW + gap) * (len / 3) * 2 - (imgW + gap),
-      listGap: (imgW + gap) / 2,
+      listGap: listGap,
       list: this.data.list
     })
   },
@@ -63,19 +72,19 @@ Page({
       duration: this.data.duration
     }
 
-    let options1 = {
+    let options1 = { // 列表一
       start: this.data.leftStart,
       direction: 'left',
       target: 'animationData1',
       ...defOpts
     }
-    let options2 = {
+    let options2 = { // 列表二
       start: this.data.rightStart,
       direction: 'right',
       target: 'animationData2',
       ...defOpts
     }
-    let options3 = {
+    let options3 = { // 列表三
       start: this.data.leftStart,
       direction: 'left',
       target: 'animationData3',
@@ -88,12 +97,15 @@ Page({
   },
 
   /**
-   * imgW: 图片宽度
-   * gap: 图片间隙
-   * len: 未拷贝前数组的长度，即原始数组长度
-   * start: 列表偏移初始值
-   * target: 动画对象赋值
-   * direction: 动画方向
+   * 创建动画函数
+   * @params: start 列表偏移初始值
+   * @params: direction 动画方向
+   * @params: target 动画对象赋值
+   * @params: imgW 图片宽度
+   * @params: gap 图片间隙
+   * @params: len 未拷贝前数组的长度，即原始数组长度
+   * @params: rotate 列表旋转角度
+   * @params: duration 动画持续时间
    */
   createAnimations(opts) {
 
