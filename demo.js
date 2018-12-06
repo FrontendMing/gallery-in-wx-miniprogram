@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    windowWidth: wx.getSystemInfoSync().windowWidth, // 设备屏幕宽度
+    screenWidth: wx.getSystemInfoSync().screenWidth, // 设备屏幕宽度
     // 图片列表自定义
     list: [
       '../../images/blur_5@2x.png',
@@ -48,7 +48,7 @@ Page({
     
     this.setData({
       leftStart: -(imgW + gap),
-      rightStart: this.data.windowWidth - (imgW + gap) * (len / 3) * 2 - (imgW + gap),
+      rightStart: this.data.screenWidth - (imgW + gap) * (len / 3) * 2 - (imgW + gap),
       listGap: listGap,
       list: this.data.list
     })
