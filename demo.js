@@ -11,8 +11,8 @@ Page({
       '../../images/blur_5@2x.png',
       '../../images/main_banner.jpg',
       '../../images/6159252dd42a2834e6d976e257b5c9ea14cebfd8.jpg',
-      '../../images/2018112716074070.jpg',
-      '../../images/haijing.jpg'
+      // '../../images/2018112716074070.jpg',
+      // '../../images/haijing.jpg'
     ],
     // 存储定时器返回值（Number），清除定时器时用
     timer1: null,
